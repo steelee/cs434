@@ -2,6 +2,7 @@ import urllib2
 import json
 import csv
 import collections
+import time
 
 try:
         from secrets import *
@@ -32,7 +33,7 @@ def aggregate(data_array):
     for count in range(0,len(player_data_aggregate)-1): player_data_aggregate[count] = player_data_aggregate[count]/len(data_array)
     return player_data_aggregate
 
-outfile = open('myfile.dat', 'w+')
+outfile = open('results.csv', 'w+')
 with open('list.txt', 'rU') as f:
   for line in f:
      url = "https://na.api.pvp.net/api/lol/na/" + VERSION_STATS + "/stats/by-summoner/" + line.rstrip() + "/ranked?season=" + SEASON + "&api_key=" + API_KEY
@@ -46,5 +47,6 @@ with open('list.txt', 'rU') as f:
      data_string = ','.join(map(str, weight))
      outfile.write(data_string)
      outfile.write("\n")
+     time.sleep(1)
 outfile.close()
 f.close()
