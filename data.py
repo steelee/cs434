@@ -1,14 +1,50 @@
 import urllib2
 import json
-from secrets import *
-from pprint import pprint
+import csv
+import collections
+
+try:
+        from secrets import *
+except ImportError:
+        raise ImportError('You need your API key in a secret file! See the README')
+
 # Globals for the URL
 SEASON = "SEASON2015"
-VERSION = "v1.3"
+VERSION_STATS = "v1.3"
+VERSION_RANK = "v2.5"
 
+def aggregate(data_array):
+    player_data_aggregate = [0,0,0,0,0,0,0,0,0,0,0,0,0,None]
+    for count in range(0,len(data_array)):
+        player_data_aggregate[0] += data_array[count]["stats"]["totalPhysicalDamageDealt"]
+        player_data_aggregate[1] += data_array[count]["stats"]["totalTurretsKilled"]
+        player_data_aggregate[2] += data_array[count]["stats"]["totalSessionsPlayed"]
+        player_data_aggregate[3] += data_array[count]["stats"]["totalAssists"]
+        player_data_aggregate[4] += data_array[count]["stats"]["totalDamageDealt"]
+        player_data_aggregate[5] += data_array[count]["stats"]["totalDeathsPerSession"]
+        player_data_aggregate[6] += data_array[count]["stats"]["totalSessionsWon"]
+        player_data_aggregate[7] += data_array[count]["stats"]["totalGoldEarned"]
+        player_data_aggregate[8] += data_array[count]["stats"]["totalChampionKills"]
+        player_data_aggregate[9] += data_array[count]["stats"]["totalMinionKills"]
+        player_data_aggregate[10] += data_array[count]["stats"]["totalSessionsLost"]
+        player_data_aggregate[11] += data_array[count]["stats"]["totalDamageTaken"]
+        player_data_aggregate[12] += data_array[count]["stats"]["totalMagicDamageDealt"]
+    for count in range(0,len(player_data_aggregate)-1): player_data_aggregate[count] = player_data_aggregate[count]/len(data_array)
+    return player_data_aggregate
+
+outfile = open('myfile.dat', 'w+')
 with open('list.txt', 'rU') as f:
   for line in f:
-     url = "https://na.api.pvp.net/api/lol/na/" + VERSION + "/stats/by-summoner/" + line.rstrip() + "/ranked?season=" + SEASON + "&api_key=" + API_KEY
-     result = urllib2.urlopen(url)
-     data = json.load(result)
-     print(data["champions"][0])
+     url = "https://na.api.pvp.net/api/lol/na/" + VERSION_STATS + "/stats/by-summoner/" + line.rstrip() + "/ranked?season=" + SEASON + "&api_key=" + API_KEY
+     result_champions = urllib2.urlopen(url)
+     data = json.load(result_champions)
+     weight = aggregate((data["champions"]))
+     url = "https://na.api.pvp.net/api/lol/na/" + VERSION_RANK + "/league/by-summoner/" + line.rstrip() + "/entry?api_key=" + API_KEY
+     result_rank = urllib2.urlopen(url)
+     data = json.load(result_rank)
+     weight[13] = data[line.rstrip()][0]["tier"]
+     data_string = ','.join(map(str, weight))
+     outfile.write(data_string)
+     outfile.write("\n")
+outfile.close()
+f.close()
