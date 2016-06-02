@@ -15,7 +15,7 @@ VERSION_STATS = "v1.3"
 VERSION_RANK = "v2.5"
 
 def aggregate(data_array):
-    player_data_aggregate = [0,0,0,0,0,0,0,0,0,0,0,0,0,None]
+    player_data_aggregate = [0,0,0,0,0,0,0,0,0,0,0,0,0]
     for count in range(0,len(data_array)):
         player_data_aggregate[0] += data_array[count]["stats"]["totalPhysicalDamageDealt"]
         player_data_aggregate[1] += data_array[count]["stats"]["totalTurretsKilled"]
@@ -30,23 +30,33 @@ def aggregate(data_array):
         player_data_aggregate[10] += data_array[count]["stats"]["totalSessionsLost"]
         player_data_aggregate[11] += data_array[count]["stats"]["totalDamageTaken"]
         player_data_aggregate[12] += data_array[count]["stats"]["totalMagicDamageDealt"]
-    for count in range(0,len(player_data_aggregate)-1): player_data_aggregate[count] = player_data_aggregate[count]/len(data_array)
+    for count in range(0,len(player_data_aggregate)): player_data_aggregate[count] = player_data_aggregate[count]/len(data_array)
     return player_data_aggregate
 
-outfile = open('results.csv', 'w+')
+outfile = open('features.csv', 'aw+')
+outfile_results = open('target.csv', 'aw+')
 with open('list.txt', 'rU') as f:
   for line in f:
+
+     # First we'll write the features
      url = "https://na.api.pvp.net/api/lol/na/" + VERSION_STATS + "/stats/by-summoner/" + line.rstrip() + "/ranked?season=" + SEASON + "&api_key=" + API_KEY
      result_champions = urllib2.urlopen(url)
      data = json.load(result_champions)
      weight = aggregate((data["champions"]))
-     url = "https://na.api.pvp.net/api/lol/na/" + VERSION_RANK + "/league/by-summoner/" + line.rstrip() + "/entry?api_key=" + API_KEY
-     result_rank = urllib2.urlopen(url)
-     data = json.load(result_rank)
-     weight[13] = data[line.rstrip()][0]["tier"]
      data_string = ','.join(map(str, weight))
      outfile.write(data_string)
      outfile.write("\n")
+
+     # Now write the target
+     url = "https://na.api.pvp.net/api/lol/na/" + VERSION_RANK + "/league/by-summoner/" + line.rstrip() + "/entry?api_key=" + API_KEY
+     result_rank = urllib2.urlopen(url)
+     data = json.load(result_rank)
+     outfile_results.write(data[line.rstrip()][0]["tier"])
+     outfile_results.write("\n")
+
+     # We don't want too may requests too fast, or we get rate-limited
      time.sleep(1)
+
 outfile.close()
+outfile_results.close()
 f.close()
