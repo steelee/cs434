@@ -3,6 +3,8 @@ import json
 import csv
 import collections
 import time
+import requests
+from requests.exceptions import HTTPError
 
 try:
         from secrets import *
@@ -45,7 +47,11 @@ with open('list.txt', 'rU') as f:
 
      # First we'll write the features
      url = "https://na.api.pvp.net/api/lol/na/" + VERSION_STATS + "/stats/by-summoner/" + line.rstrip() + "/ranked?season=" + SEASON + "&api_key=" + API_KEY
-     result_champions = urllib2.urlopen(url)
+     try:
+     	result_champions = urllib2.urlopen(url)
+     except urllib2.HTTPError:
+	time.sleep(5)
+     	result_champions = urllib2.urlopen(url)
      data = json.load(result_champions)
      weight = aggregate((data["champions"]))
      data_string = ','.join(map(str, weight))
@@ -54,7 +60,11 @@ with open('list.txt', 'rU') as f:
 
      # Now write the target
      url = "https://na.api.pvp.net/api/lol/na/" + VERSION_RANK + "/league/by-summoner/" + line.rstrip() + "/entry?api_key=" + API_KEY
-     result_rank = urllib2.urlopen(url)
+     try:
+     	result_rank = urllib2.urlopen(url)
+     except urllib2.HTTPError:
+	time.sleep(5)
+     	result_rank = urllib2.urlopen(url)
      data = json.load(result_rank)
      print "Rank: ", data[line.rstrip()][0]["tier"]
      outfile_results.write(str(rank[data[line.rstrip()][0]["tier"]]))
