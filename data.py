@@ -14,8 +14,12 @@ SEASON = "SEASON2015"
 VERSION_STATS = "v1.3"
 VERSION_RANK = "v2.5"
 
+# Ranking integers:
+rank = {'BRONZE':0, 'SILVER':1, 'GOLD':2, 'PLATINUM':3, 'DIAMOND':4, 'MASTER':5, 'CHALLENGER':6}
+
 def aggregate(data_array):
     player_data_aggregate = [0,0,0,0,0,0,0,0,0,0,0,0,0]
+    total_champions = len(data_array)
     for count in range(0,len(data_array)):
         player_data_aggregate[0] += data_array[count]["stats"]["totalPhysicalDamageDealt"]
         player_data_aggregate[1] += data_array[count]["stats"]["totalTurretsKilled"]
@@ -30,7 +34,8 @@ def aggregate(data_array):
         player_data_aggregate[10] += data_array[count]["stats"]["totalSessionsLost"]
         player_data_aggregate[11] += data_array[count]["stats"]["totalDamageTaken"]
         player_data_aggregate[12] += data_array[count]["stats"]["totalMagicDamageDealt"]
-    for count in range(0,len(player_data_aggregate)): player_data_aggregate[count] = player_data_aggregate[count]/len(data_array)
+    for count in range(0,len(player_data_aggregate)):
+	player_data_aggregate[count] = player_data_aggregate[count]/total_champions 
     return player_data_aggregate
 
 outfile = open('features.csv', 'aw+')
@@ -51,9 +56,10 @@ with open('list.txt', 'rU') as f:
      url = "https://na.api.pvp.net/api/lol/na/" + VERSION_RANK + "/league/by-summoner/" + line.rstrip() + "/entry?api_key=" + API_KEY
      result_rank = urllib2.urlopen(url)
      data = json.load(result_rank)
-     outfile_results.write(data[line.rstrip()][0]["tier"])
+     print "Rank: ", data[line.rstrip()][0]["tier"]
+     outfile_results.write(str(rank[data[line.rstrip()][0]["tier"]]))
      outfile_results.write("\n")
-
+     
      # We don't want too may requests too fast, or we get rate-limited
      time.sleep(1)
 
