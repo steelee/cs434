@@ -47,36 +47,44 @@ outfile_results = open('target.csv', 'aw+')
 
 with open('list.txt', 'rU') as f:
 	for line in f:
-
+		not_found = False
 		# First we'll write the features
-		url = "https://na.api.pvp.net/api/lol/na/" + VERSION_STATS + "/stats/by-summoner/" + line.rstrip() + "/ranked?season=" + SEASON + "&api_key=" + API_KEY
+		url_data = "https://na.api.pvp.net/api/lol/na/" + VERSION_STATS + "/stats/by-summoner/" + line.rstrip() + "/ranked?season=" + SEASON + "&api_key=" + API_KEY
 		try:
-			result_champions = urllib2.urlopen(url)
+			result_champions = urllib2.urlopen(url_data)
 		except urllib2.HTTPError:
 			time.sleep(5)
-			result_champions = urllib2.urlopen(url)
-		
-		data = json.load(result_champions)
-		weight = aggregate((data["champions"]))
-		data_string = ','.join(map(str, weight))
-		outfile.write(data_string)
-		outfile.write("\n")
+			try:
+				result_champions = urllib2.urlopen(url_data)
+			except urllib2.HTTPError:
+				print "No match data found for ", line.rstrip()
+				not_found = True
+		url_rank = "https://na.api.pvp.net/api/lol/na/" + VERSION_RANK + "/league/by-summoner/" + line.rstrip() + "/entry?api_key=" + API_KEY
+		try:
+			result_rank = urllib2.urlopen(url_rank)
+		except urllib2.HTTPError:
+			time.sleep(5)
+			try:
+				result_rank = urllib2.urlopen(url_rank)
+			except urllib2.HTTPError:
+				print "No ranked league found for ", line.rstrip()
+				not_found = True
+		if not not_found:
+			# First write features
+			data = json.load(result_champions)
+			weight = aggregate((data["champions"]))
+			data_string = ','.join(map(str, weight))
+			outfile.write(data_string)
+			outfile.write("\n")
 	
-		# Now write the target
-		url = "https://na.api.pvp.net/api/lol/na/" + VERSION_RANK + "/league/by-summoner/" + line.rstrip() + "/entry?api_key=" + API_KEY
-		try:
-			result_rank = urllib2.urlopen(url)
-		except urllib2.HTTPError:
-			time.sleep(5)
-			result_rank = urllib2.urlopen(url)
+			# Now write the target
+			data = json.load(result_rank)
+			print "Rank: ", data[line.rstrip()][0]["tier"]
+			outfile_results.write(str(rank[data[line.rstrip()][0]["tier"]]))
+			outfile_results.write("\n")
 		
-		data = json.load(result_rank)
-		print "Rank: ", data[line.rstrip()][0]["tier"]
-		outfile_results.write(str(rank[data[line.rstrip()][0]["tier"]]))
-		outfile_results.write("\n")
-		
-		# We don't want too may requests too fast, or we get rate-limited
-		time.sleep(1)
+			# We don't want too may requests too fast, or we get rate-limited
+			time.sleep(1)
 
 outfile.close()
 outfile_results.close()
