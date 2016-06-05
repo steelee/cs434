@@ -1,6 +1,5 @@
 import numpy
 import statsmodels.api as sm
-# from numpy import matrix, polyfit
 
 # build the matricies, adding a ones column
 # to x for higher precision
@@ -18,6 +17,7 @@ with open('linear_out.txt', 'w') as f:
 	f.write(summary)
 	f.write("\n")
 
+# determine the success rate of the algorithm
 success = 0
 failure = 0
 for i in range(x.shape[0]):
@@ -31,3 +31,12 @@ total = success + failure
 percent_correct = int((float(success) / float(failure)) * 100)
 print "success\tfailure\ttotal\tpercent correct"
 print "{0}\t{1}\t{2}\t{3}%".format(success, failure, total, percent_correct)
+
+# break down placement
+placement_matrix = numpy.zeros((6,6), dtype=numpy.int)
+for i in range(x.shape[0]):
+	val = int(numpy.round(numpy.dot(weights, x[i])))
+	placement_matrix[int(y[i]),val] += 1
+
+print "placement matrix"
+print placement_matrix
