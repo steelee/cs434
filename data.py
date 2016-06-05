@@ -7,8 +7,7 @@ import requests
 from requests.exceptions import HTTPError
 
 try:
-		# API_KEY="d8f924f5-8658-4786-8df3-8e8f86b05a68" #dvslanti
-		API_KEY="ce7efa3b-d7f5-41dc-909e-b11ace8dbd1b" #darnmarshall
+		import secrets
 except ImportError:
 		raise ImportError('You need your API key in a secret file! See the README')
 
@@ -43,11 +42,11 @@ def aggregate(data_array):
 	
 	return player_data_aggregate
 
-outfile = open('features8.csv', 'aw+')
-outfile_results = open('target8.csv', 'aw+')
+outfile = open('features.csv', 'aw+')
+outfile_results = open('target.csv', 'aw+')
 countline = 0
 
-with open('list8.txt', 'rU') as f:
+with open('list.txt', 'rU') as f:
 	for line in f:
 		countline += 1
 		print countline

@@ -4,6 +4,14 @@ import pylab as pl
 
 from sklearn import svm, linear_model, cross_validation
 
+def check_percent(data):
+    rank = {0:0.0, 1:0.0, 2:0.0, 3:0.0, 4:0.0, 5:0.0, 6:0.0}
+    for count in range(len(data)):
+         rank[data[count]] = rank[data[count]] + 1 
+    for count in range(0,len(rank)):
+         rank[count] = rank[count]/len(data)
+    return rank
+
 def transform_pairwise(X, y):
     X_new = []
     y_new = []
@@ -40,13 +48,14 @@ class RankSVM(svm.LinearSVC):
 
 
 if __name__ == '__main__':
-    data = np.loadtxt('sample_features.csv', delimiter=',')
+    data = np.loadtxt('training_features.csv', delimiter=',')
     n_samples = len(data)
     n_features = len(data[0])
     true_coef = np.random.randn(n_features)
     X = data 
     noise = np.random.randn(n_samples) / np.linalg.norm(true_coef)
-    y = np.loadtxt('sample_target.csv',delimiter=",") 
+    y = np.loadtxt('training_target.csv',delimiter=",") 
+    ratios = check_percent(y)
     y = np.arctan(y)
     y += .05 * noise 
     Y = np.c_[y, np.mod(np.arange(n_samples), 5)]
@@ -66,3 +75,6 @@ if __name__ == '__main__':
     X_test_trans, y_test_trans = transform_pairwise(X[test], y[test])
     score = np.mean(np.sign(np.dot(X_test_trans, ridge.coef_)) == y_test_trans)
     print 'Performance of linear regression ', score
+
+    print 'Real placement ratios in file:'
+    print ratios
