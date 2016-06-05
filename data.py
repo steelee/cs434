@@ -7,7 +7,8 @@ import requests
 from requests.exceptions import HTTPError
 
 try:
-		from secrets import *
+		# API_KEY="d8f924f5-8658-4786-8df3-8e8f86b05a68" #dvslanti
+		API_KEY="ce7efa3b-d7f5-41dc-909e-b11ace8dbd1b" #darnmarshall
 except ImportError:
 		raise ImportError('You need your API key in a secret file! See the README')
 
@@ -42,18 +43,21 @@ def aggregate(data_array):
 	
 	return player_data_aggregate
 
-outfile = open('features.csv', 'aw+')
-outfile_results = open('target.csv', 'aw+')
+outfile = open('features8.csv', 'aw+')
+outfile_results = open('target8.csv', 'aw+')
+countline = 0
 
-with open('list.txt', 'rU') as f:
+with open('list8.txt', 'rU') as f:
 	for line in f:
+		countline += 1
+		print countline
 		not_found = False
 		# First we'll write the features
 		url_data = "https://na.api.pvp.net/api/lol/na/" + VERSION_STATS + "/stats/by-summoner/" + line.rstrip() + "/ranked?season=" + SEASON + "&api_key=" + API_KEY
 		try:
 			result_champions = urllib2.urlopen(url_data)
 		except urllib2.HTTPError:
-			time.sleep(5)
+			time.sleep(30)
 			try:
 				result_champions = urllib2.urlopen(url_data)
 			except urllib2.HTTPError:
@@ -84,7 +88,7 @@ with open('list.txt', 'rU') as f:
 			outfile_results.write("\n")
 		
 			# We don't want too may requests too fast, or we get rate-limited
-			time.sleep(1)
+			time.sleep(5)
 
 outfile.close()
 outfile_results.close()
