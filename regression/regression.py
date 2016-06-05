@@ -10,5 +10,6 @@ x = numpy.concatenate((x, o), axis=1)
 y = numpy.loadtxt('../sample_target.csv', delimiter=",", ndmin=2)
 
 with open('out.txt', 'w') as f:
-	results = sm.OLS(y, x).fit().summary()
-	print results
+	results = sm.OLS(y, x).fit().summary().as_text()
+	f.write(results)
+	f.write("\n")
