@@ -4,7 +4,6 @@ import pylab as pl
 
 from sklearn import svm, linear_model, cross_validation
 
-
 def transform_pairwise(X, y):
     X_new = []
     y_new = []
@@ -49,15 +48,14 @@ if __name__ == '__main__':
     noise = np.random.randn(n_samples) / np.linalg.norm(true_coef)
     y = np.loadtxt('sample_target.csv',delimiter=",") 
     y = np.arctan(y)
-    y += .1 * noise 
+    y += .05 * noise 
     Y = np.c_[y, np.mod(np.arange(n_samples), 5)]
     cv = cross_validation.KFold(n_samples, 5)
     train, test = iter(cv).next()
-
-    pl.scatter(np.dot(X, true_coef), y)
+    pl.scatter(np.dot(X, true_coef), y,)
     pl.title('League of Legends Ranking')
     pl.xlabel('Confidence')
-    pl.ylabel('Ranking')
+    pl.ylabel('Ranking As Average')
     pl.show()
 
     rank_svm = RankSVM().fit(X[train], Y[train])
