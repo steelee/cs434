@@ -57,6 +57,8 @@ print "success\tfailure\ttotal\tpercent correct"
 print "{0}\t{1}\t{2}\t{3}%".format(success, failure, total, percent_correct)
 
 # break down placement
+# row is where they should be placed,
+# column is where they ended up being placed
 placement_matrix = numpy.zeros((6,6), dtype=numpy.int)
 for i in range(x.shape[0]):
 	val = int(numpy.round(numpy.dot(weights, x[i])))
@@ -67,5 +69,3 @@ for i in range(x.shape[0]):
 
 print "placement matrix"
 print placement_matrix
-
-len(pred)
