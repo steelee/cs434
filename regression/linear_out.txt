@@ -1,39 +1,39 @@
                             OLS Regression Results                            
 ==============================================================================
-Dep. Variable:                      y   R-squared:                       0.238
-Model:                            OLS   Adj. R-squared:                  0.209
-Method:                 Least Squares   F-statistic:                     8.278
-Date:                Sat, 04 Jun 2016   Prob (F-statistic):           1.45e-14
-Time:                        21:49:36   Log-Likelihood:                -456.85
-No. Observations:                 359   AIC:                             941.7
-Df Residuals:                     345   BIC:                             996.1
+Dep. Variable:                      y   R-squared:                       0.262
+Model:                            OLS   Adj. R-squared:                  0.257
+Method:                 Least Squares   F-statistic:                     54.19
+Date:                Sun, 05 Jun 2016   Prob (F-statistic):          8.22e-121
+Time:                        14:47:06   Log-Likelihood:                -2669.1
+No. Observations:                2000   AIC:                             5366.
+Df Residuals:                    1986   BIC:                             5445.
 Df Model:                          13                                         
 Covariance Type:            nonrobust                                         
 ==============================================================================
                  coef    std err          t      P>|t|      [95.0% Conf. Int.]
 ------------------------------------------------------------------------------
-x1          7.279e-07   6.76e-07      1.077      0.282     -6.02e-07  2.06e-06
-x2            -0.0218      0.012     -1.787      0.075        -0.046     0.002
-x3             0.0717      0.100      0.718      0.473        -0.125     0.268
-x4            -0.0017      0.002     -0.878      0.380        -0.005     0.002
-x5         -3.062e-07   6.59e-07     -0.465      0.642      -1.6e-06  9.89e-07
-x6            -0.0030      0.002     -1.506      0.133        -0.007     0.001
-x7             0.3397      0.105      3.227      0.001         0.133     0.547
-x8         -1.061e-05   5.86e-06     -1.810      0.071     -2.21e-05   9.2e-07
-x9             0.0004      0.002      0.172      0.864        -0.004     0.004
-x10            0.0001   9.73e-05      1.119      0.264     -8.25e-05     0.000
-x11           -0.1690      0.102     -1.665      0.097        -0.369     0.031
-x12        -9.755e-07   7.78e-07     -1.254      0.211     -2.51e-06  5.54e-07
-x13         4.348e-07   6.66e-07      0.653      0.514     -8.75e-07  1.74e-06
-const          1.4624      0.093     15.797      0.000         1.280     1.644
+x1          6.241e-07    3.6e-07      1.735      0.083     -8.15e-08  1.33e-06
+x2            -0.0179      0.003     -5.533      0.000        -0.024    -0.012
+x3             0.0731      0.044      1.665      0.096        -0.013     0.159
+x4            -0.0006      0.001     -0.868      0.385        -0.002     0.001
+x5         -2.893e-07   3.41e-07     -0.848      0.397     -9.58e-07   3.8e-07
+x6            -0.0036      0.001     -4.736      0.000        -0.005    -0.002
+x7             0.3412      0.046      7.484      0.000         0.252     0.431
+x8         -1.166e-05   2.73e-06     -4.265      0.000      -1.7e-05  -6.3e-06
+x9             0.0003      0.001      0.305      0.760        -0.002     0.002
+x10            0.0002   4.17e-05      3.774      0.000      7.56e-05     0.000
+x11           -0.2421      0.044     -5.470      0.000        -0.329    -0.155
+x12         5.705e-07   2.45e-07      2.332      0.020      9.08e-08  1.05e-06
+x13         3.942e-07   3.52e-07      1.120      0.263     -2.96e-07  1.08e-06
+const          1.4618      0.039     37.839      0.000         1.386     1.538
 ==============================================================================
-Omnibus:                        8.363   Durbin-Watson:                   1.349
-Prob(Omnibus):                  0.015   Jarque-Bera (JB):                8.227
-Skew:                           0.334   Prob(JB):                       0.0163
-Kurtosis:                       2.680   Cond. No.                     2.69e+07
+Omnibus:                       63.141   Durbin-Watson:                   1.243
+Prob(Omnibus):                  0.000   Jarque-Bera (JB):               68.587
+Skew:                           0.453   Prob(JB):                     1.28e-15
+Kurtosis:                       3.054   Cond. No.                     2.84e+07
 ==============================================================================
 
 Warnings:
 [1] Standard Errors assume that the covariance matrix of the errors is correctly specified.
-[2] The condition number is large, 2.69e+07. This might indicate that there are
+[2] The condition number is large, 2.84e+07. This might indicate that there are
 strong multicollinearity or other numerical problems.
