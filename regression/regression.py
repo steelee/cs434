@@ -9,7 +9,8 @@ o = numpy.ones((x.shape[0],1))
 x = numpy.concatenate((x, o), axis=1)
 y = numpy.loadtxt('../sample_target.csv', delimiter=",", ndmin=2)
 
-with open('out.txt', 'w') as f:
+# perform a linear regresion on the data
+with open('linear_out.txt', 'w') as f:
 	results = sm.OLS(y, x).fit().summary().as_text()
 	f.write(results)
 	f.write("\n")
