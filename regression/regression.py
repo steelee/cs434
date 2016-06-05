@@ -28,7 +28,7 @@ for i in range(x.shape[0]):
 		failure += 1
 
 total = success + failure
-percent_correct = int((float(success) / float(failure)) * 100)
+percent_correct = int((float(success) / float(total)) * 100)
 print "success\tfailure\ttotal\tpercent correct"
 print "{0}\t{1}\t{2}\t{3}%".format(success, failure, total, percent_correct)
 
