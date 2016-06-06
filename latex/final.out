@@ -1,0 +1,33 @@
+\BOOKMARK [1][-]{section.1}{Abstract}{}
+\BOOKMARK [1][-]{section.2}{Introduction}{}
+\BOOKMARK [2][-]{subsection.2.1}{Background}{section.2}
+\BOOKMARK [3][-]{subsubsection.2.1.1}{League of Legends}{subsection.2.1}
+\BOOKMARK [3][-]{subsubsection.2.1.2}{Ranking System}{subsection.2.1}
+\BOOKMARK [2][-]{subsection.2.2}{Our challenge: Predict a player's tier based on their performance}{section.2}
+\BOOKMARK [2][-]{subsection.2.3}{Significance}{section.2}
+\BOOKMARK [3][-]{subsubsection.2.3.1}{A player's rank is a form of social status}{subsection.2.3}
+\BOOKMARK [3][-]{subsubsection.2.3.2}{Ranking systems in modern games}{subsection.2.3}
+\BOOKMARK [1][-]{section.3}{Proposed approach}{}
+\BOOKMARK [2][-]{subsubsection.3.0.3}{Why choose a ranking algorithm?}{section.3}
+\BOOKMARK [3][-]{subsubsection.3.0.4}{Why choose a linear regression algorithm?}{subsubsection.3.0.3}
+\BOOKMARK [2][-]{subsection.3.1}{Data harvesting}{section.3}
+\BOOKMARK [3][-]{subsubsection.3.1.1}{Retrieval}{subsection.3.1}
+\BOOKMARK [2][-]{subsection.3.2}{Feature selection}{section.3}
+\BOOKMARK [2][-]{subsection.3.3}{A look at the data}{section.3}
+\BOOKMARK [2][-]{subsection.3.4}{Pre-processing}{section.3}
+\BOOKMARK [1][-]{section.4}{Experiments}{}
+\BOOKMARK [2][-]{subsection.4.1}{Ranking Algorithm}{section.4}
+\BOOKMARK [3][-]{subsubsection.4.1.1}{Software package: Scikit-learn}{subsection.4.1}
+\BOOKMARK [2][-]{subsection.4.2}{Linear Regression Algorithm}{section.4}
+\BOOKMARK [2][-]{subsection.4.3}{Linear Regression Algorithm}{section.4}
+\BOOKMARK [2][-]{subsection.4.4}{Ranking Algorithm}{section.4}
+\BOOKMARK [3][-]{subsubsection.4.4.1}{Chosen software package for our RidgeCV linear regression Algorithm: Scikit-learn}{subsection.4.4}
+\BOOKMARK [1][-]{section.5}{Results}{}
+\BOOKMARK [2][-]{subsection.5.1}{Ranking Algorithm}{section.5}
+\BOOKMARK [2][-]{subsection.5.2}{Linear Regression Algorithm}{section.5}
+\BOOKMARK [2][-]{subsection.5.3}{Conclusions}{section.5}
+\BOOKMARK [1][-]{section.6}{Insights}{}
+\BOOKMARK [2][-]{subsection.6.1}{Further Research Opportunities}{section.6}
+\BOOKMARK [3][-]{subsubsection.6.1.1}{Split the data according to play style}{subsection.6.1}
+\BOOKMARK [3][-]{subsubsection.6.1.2}{Try a different machine learning algorithm altogether}{subsection.6.1}
+\BOOKMARK [3][-]{subsubsection.6.1.3}{Keep the data rich}{subsection.6.1}
